@@ -28,6 +28,7 @@ const SignIn = () => {
 
   useEffect(() => {
     if (isAuth) {
+      console.log("signin", myRole)
       return myRole !== USER_ROLE ? navigate(ADMIN) : navigate(LEARNMORE);
     }
   }, [isAuth]);

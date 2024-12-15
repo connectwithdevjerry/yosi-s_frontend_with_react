@@ -53,29 +53,29 @@ export const myClassSlice = createSlice({
         state.classMessage = "Error Loading Product";
       })
 
-      .addCase(handleRemoveFromCart.pending, (state) => {
-        state.productsError = "";
-        state.inappLoading = true;
-      })
-      .addCase(handleRemoveFromCart.fulfilled, (state, action) => {
-        console.log(action.payload);
-        if (!action.payload.data.status) {
-          state.productsError = "Product already in cart!";
-          alert(state.productsError);
-        } else {
-          const updated = state.orderDetails.items.filter(
-            (item) => item.id._id != action.payload.productId
-          );
-          state.orderDetails.items = updated;
-          state.orderDetails.subtotal = action.payload.data?.totalPrice;
-        }
-        state.inappLoading = false;
-      })
-      .addCase(handleRemoveFromCart.rejected, (state) => {
-        state.inappLoading = false;
-        state.productsError = "Couldn't remove product from cart!";
-        alert(state.productsError);
-      });
+      // .addCase(handleRemoveFromCart.pending, (state) => {
+      //   state.productsError = "";
+      //   state.inappLoading = true;
+      // })
+      // .addCase(handleRemoveFromCart.fulfilled, (state, action) => {
+      //   console.log(action.payload);
+      //   if (!action.payload.data.status) {
+      //     state.productsError = "Product already in cart!";
+      //     alert(state.productsError);
+      //   } else {
+      //     const updated = state.orderDetails.items.filter(
+      //       (item) => item.id._id != action.payload.productId
+      //     );
+      //     state.orderDetails.items = updated;
+      //     state.orderDetails.subtotal = action.payload.data?.totalPrice;
+      //   }
+      //   state.inappLoading = false;
+      // })
+      // .addCase(handleRemoveFromCart.rejected, (state) => {
+      //   state.inappLoading = false;
+      //   state.productsError = "Couldn't remove product from cart!";
+      //   alert(state.productsError);
+      // });
   },
 });
 

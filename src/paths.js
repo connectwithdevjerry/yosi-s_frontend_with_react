@@ -29,6 +29,7 @@ export const BACK_RESET_PASSWORD = "user/reset_password";
 export const GET_CLASSES = "classes/get_classes";
 export const GET_CLASSES_ADMIN = "classes/get_classes_admin";
 export const JOIN_CLASS = "classes/join_class";
+export const AUTHORIZE = "user/grant_user_permission";
 
 // CONSTANTS
 export const ADMIN_ROLE = "admin";

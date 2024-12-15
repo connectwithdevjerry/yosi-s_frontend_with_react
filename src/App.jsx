@@ -41,9 +41,7 @@ import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
 
 function App() {
-
   const dispatch = useDispatch();
-
 
   const confirmAuthStatus = () => {
     // Implement authentication logic here and return true or false based on authentication status

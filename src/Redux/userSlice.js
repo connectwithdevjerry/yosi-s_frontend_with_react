@@ -2,7 +2,14 @@ import { jwtDecode } from "jwt-decode";
 import customFetch from "./axiosObject";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { BACK_RESET_PASSWORD, BACK_SIGNIN, BACK_SIGNUP, RESET_PASSWORD, SIGNIN, USER_ROLE } from "../paths";
+import {
+  BACK_RESET_PASSWORD,
+  BACK_SIGNIN,
+  BACK_SIGNUP,
+  RESET_PASSWORD,
+  SIGNIN,
+  USER_ROLE,
+} from "../paths";
 
 const initialState = {
   userMessage: "",
@@ -12,7 +19,7 @@ const initialState = {
   myRole: USER_ROLE,
   currentPath: "",
   myProfile: {},
-  alertError: false
+  alertError: false,
 };
 
 export const userSlice = createSlice({
@@ -22,11 +29,15 @@ export const userSlice = createSlice({
     clearUserMsg: (state) => {
       state.userMessage = "";
     },
+    setAuth: (state) => {
+      state.isAuth = false;
+    },
     setCurrentPath: (state, action) => {
       state.currentPath = action.payload;
     },
     setMyProfile: (state, action) => {
       state.myProfile = action.payload;
+      state.myRole = state.myProfile.permissionLev;
       state.isAuth = true;
     },
   },
@@ -78,8 +89,7 @@ export const userSlice = createSlice({
         state.accessToken = accessToken;
 
         state.myProfile = jwtDecode(accessToken);
-
-        console.log(state.myProfile);
+        state.myRole = state.myProfile.permissionLev;
 
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
@@ -95,7 +105,7 @@ export const userSlice = createSlice({
       .addCase(getUser.rejected, (state) => {
         console.log("could not fetch user...");
         state.userMessage = "Error occured while getting user!";
-        state.alertError = true
+        state.alertError = true;
         state.loading = false;
       })
       .addCase(resetPassword.pending, (state) => {
@@ -106,13 +116,13 @@ export const userSlice = createSlice({
       .addCase(resetPassword.fulfilled, (state, action) => {
         state.loading = false;
         if (!action.payload.status) {
-          state.alertError = true
+          state.alertError = true;
           if (action.payload.message === "jwt expired") {
             state.userMessage = "You're using an expired Link";
           } else {
             state.userMessage = action.payload.message;
           }
-          state.alertError = true
+          state.alertError = true;
           state.userMessage = "Password Reset Successful!";
           return;
         }
@@ -120,7 +130,7 @@ export const userSlice = createSlice({
       .addCase(resetPassword.rejected, (state) => {
         console.log("could not fetch user...");
         state.loading = false;
-        state.alertError = true
+        state.alertError = true;
         state.userMessage = "could not fetch user...";
       });
   },
@@ -160,6 +170,7 @@ export const resetPassword = createAsyncThunk(
   }
 );
 
-export const { clearUserMsg, setCurrentPath, setMyProfile } = userSlice.actions;
+export const { clearUserMsg, setCurrentPath, setMyProfile, setAuth } =
+  userSlice.actions;
 
 export default userSlice.reducer;
