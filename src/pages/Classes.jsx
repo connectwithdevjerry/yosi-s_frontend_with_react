@@ -19,7 +19,7 @@ const Classes = () => {
     dispatch(getAllClasses(role));
   }, []);
 
-  console.log({ all_classes });
+  // console.log({ all_classes });
 
   return (
     <div>

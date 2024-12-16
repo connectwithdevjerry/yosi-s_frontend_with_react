@@ -56,14 +56,6 @@ const CreateClass = () => {
       validationSchema: CreateClassValidationSchema,
 
       onSubmit: (values, { resetForm }) => {
-        alert(
-          !values.update_no_of_max_signups &&
-            !values.update_style &&
-            !values.updateDescription &&
-            !values.udateDateAndTime &&
-            !values.updateAgeGroup &&
-            !values.updateVenue
-        );
         const finalValues = {
           ...values,
           published:

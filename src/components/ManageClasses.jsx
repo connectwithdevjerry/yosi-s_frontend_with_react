@@ -32,7 +32,7 @@ const ManageClasses = () => {
 
   const handleDelete = (id) => {
     const url = `${BASE_URL}${DELETE_CLASS}/${id}`;
-    
+
     customFetch.delete(url).then((res) => {
       if (res.data.status) {
         dispatch(getAllClasses(myRole));
@@ -40,6 +40,10 @@ const ManageClasses = () => {
       }
       return myAlert(res.data.message, !res.status);
     });
+  };
+
+  const shorten = (text, charNum) => {
+    return text.length > charNum ? `${text.slice(0, charNum)}...` : text;
   };
 
   return (
@@ -90,9 +94,11 @@ const ManageClasses = () => {
               }) => (
                 <tr key={_id}>
                   <td className="px-6 py-4 whitespace-nowrap">{title}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{description}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {shorten(description, 50)}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap font-bold text-center">
-                    {students.length}/{no_of_max_signups}
+                    {students?.length}/{no_of_max_signups}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-center">
                     {published ? "published" : "draft"}
@@ -104,12 +110,14 @@ const ManageClasses = () => {
                     >
                       check signups
                     </Link>
-                    <Link
-                      to={EDIT_CLASS}
-                      className="text-blue-600 hover:text-blue-900 mr-2"
-                    >
-                      Edit
-                    </Link>
+                    {!published && (
+                      <Link
+                        to={`${EDIT_CLASS}/${uniqueRouteId}`}
+                        className="text-blue-600 hover:text-blue-900 mr-2"
+                      >
+                        Edit
+                      </Link>
+                    )}
                     <button
                       onClick={() => handleDelete(uniqueRouteId)}
                       className="text-red-600 hover:text-red-900"

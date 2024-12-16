@@ -84,7 +84,7 @@ function App() {
         <Route path={`${CHECK_SIGNUPS}/:id`} element={<CheckSignups />} />
         <Route path={CREATE_CLASS} element={<CreateClass />} />
         <Route path={USER_TO_MANAGER} element={<SwitchToAdmin />} />
-        <Route path={EDIT_CLASS} element={<EditClass />} />
+        <Route path={`${EDIT_CLASS}/:id`} element={<EditClass />} />
         <Route path={MANAGE_INSTRUCTORS} element={<ManageInstructor />} />
         <Route path={MANAGE_CLASSES} element={<ManageClasses />} />
       </Route>

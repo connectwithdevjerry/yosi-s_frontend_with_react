@@ -48,7 +48,7 @@ export const myClassSlice = createSlice({
           state.classMessage = "No classes found!";
           return;
         }
-        state.all_classes = action.payload?.data?.slice(0, 4);
+        state.all_classes = action.payload?.data;
         console.log("all classes", action);
       })
       .addCase(getAllClasses.rejected, (state) => {

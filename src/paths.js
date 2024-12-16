@@ -28,10 +28,12 @@ export const BACK_ACTIVATE = "user/activate";
 export const BACK_FORGOT = "user/forgot_password";
 export const BACK_RESET_PASSWORD = "user/reset_password";
 export const GET_CLASSES = "classes/get_classes";
+export const BACK_GET_CLASS = "classes/get_class";
 export const GET_CLASSES_ADMIN = "classes/get_classes_admin";
 export const JOIN_CLASS = "classes/join_class";
 export const DELETE_CLASS = "classes/delete_class";
 export const BACK_CREATE_CLASS = "classes/create_class";
+export const BACK_UPDATE_CLASS = "classes/update_class";
 export const AUTHORIZE = "user/grant_user_permission";
 
 // CONSTANTS
