@@ -11,6 +11,7 @@ export const MANAGE_CLASSES = "/admin/manage-classes";
 export const CREATE_CLASS = "/admin/manage-classes/create";
 export const USER_TO_MANAGER = "/admin/manage-instructors/create";
 export const EDIT_CLASS = "/admin/manage-classes/edit";
+export const CHECK_SIGNUPS = "/admin/manage-classes/check_signups";
 export const DEL_CLASS = "/admin/manage-classes/del";
 export const ACTIVATE = "/confirm_email_address/:token";
 export const RESET_LINK_SENT = "/resetlinksent/:email";
@@ -29,6 +30,8 @@ export const BACK_RESET_PASSWORD = "user/reset_password";
 export const GET_CLASSES = "classes/get_classes";
 export const GET_CLASSES_ADMIN = "classes/get_classes_admin";
 export const JOIN_CLASS = "classes/join_class";
+export const DELETE_CLASS = "classes/delete_class";
+export const BACK_CREATE_CLASS = "classes/create_class";
 export const AUTHORIZE = "user/grant_user_permission";
 
 // CONSTANTS

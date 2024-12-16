@@ -8,6 +8,7 @@ import ManageInstructor from "./ManageInstructor";
 import SwitchToAdmin from "./SwitchToAdmin";
 import EditClass from "./EditClass";
 import Activate from "./Activate";
+import CheckSignups from "./CheckSignups";
 
 export {
   Navbar,
@@ -19,5 +20,6 @@ export {
   ManageInstructor,
   EditClass,
   SwitchToAdmin,
-  Activate
+  Activate,
+  CheckSignups,
 };

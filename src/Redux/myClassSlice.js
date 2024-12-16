@@ -44,6 +44,10 @@ export const myClassSlice = createSlice({
       .addCase(getAllClasses.fulfilled, (state, action) => {
         console.log("getting all classes...");
         state.loading = false;
+        if (!action.payload.status){
+          state.classMessage = "No classes found!";
+          return;
+        }
         state.all_classes = action.payload?.data?.slice(0, 4);
         console.log("all classes", action);
       })
@@ -100,7 +104,7 @@ export const getAllClasses = createAsyncThunk(
     }`;
 
     try {
-      const response = await axios.get(url);
+      const response = await customFetch.get(url);
       console.log({ myClasses: response.data });
       return response.data;
     } catch (error) {

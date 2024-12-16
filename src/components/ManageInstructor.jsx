@@ -63,17 +63,21 @@ const ManageInstructor = () => {
               <th className="px-6 py-3 bg-gray-50 text-left text-lg font-medium text-gray-500 uppercase tracking-wider">
                 Email
               </th>
+              <th className="px-6 py-3 bg-gray-50 text-left text-lg font-medium text-gray-500 uppercase tracking-wider">
+                Perm_Type
+              </th>
               <th className="px-6 py-3 bg-gray-50 text-left text-lg text-right font-medium text-gray-500 uppercase tracking-wider">
                 Actions
               </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {admin_et_instructors.map(({ _id, firstName, lastName, email }) => (
+            {admin_et_instructors.map(({ _id, firstName, lastName, email, permissionLev }) => (
               <tr key={_id}>
                 <td className="px-6 py-4 whitespace-nowrap">{firstName}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{lastName}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{email}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{permissionLev}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <button
                     onClick={() => handleAdminRemove(email)}

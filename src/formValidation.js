@@ -53,13 +53,21 @@ export const contactValidationSchema = yup.object({
   email: yup.string().email().required("Email cannot be blank!"),
 });
 
-export const shippingValidationSchema = yup.object({
-  orderId: yup.string().required("order ID not found, refresh page!"),
-  email: yup.string().email().required("Email is required"),
-  fullName: yup.string().required("Please enter your name.."),
-  street: yup.string().required("Please enter your street.."),
-  city: yup.string().required("Please enter your city.."),
-  state: yup.string().required("Please enter your state.."),
-  zipCode: yup.string().required("Please enter your zipCode.."),
-  country: yup.string().required("Please enter your country.."),
+export const CreateClassValidationSchema = yup.object({
+  title: yup.string().required(),
+  description: yup.string(),
+  dateAndTime: yup.date(),
+  venue: yup.string(),
+  ageMin: yup.number(),
+  ageMax: yup.number(),
+  no_of_max_signups: yup.number(),
+  style: yup.string(),
+  classImage: yup.string().required(),
+  instructor: yup.string().required(),
+  update_no_of_max_signups: yup.boolean(),
+  update_style: yup.boolean(),
+  updateDescription: yup.boolean(),
+  udateDateAndTime: yup.boolean(),
+  updateAgeGroup: yup.boolean(),
+  updateVenue: yup.boolean(),
 });

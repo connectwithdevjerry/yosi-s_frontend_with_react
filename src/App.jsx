@@ -1,4 +1,5 @@
 import {
+  CHECK_SIGNUPS,
   EDIT_CLASS,
   MANAGE_CLASSES,
   MANAGE_INSTRUCTORS,
@@ -34,6 +35,7 @@ import {
   ManageInstructor,
   SwitchToAdmin,
   Activate,
+  CheckSignups,
 } from "./components";
 import { setMyProfile } from "./Redux/userSlice";
 import { useEffect } from "react";
@@ -79,6 +81,7 @@ function App() {
       <Route path={FORGOT_PASSWORD} element={<ForgotPassword />} />
       <Route path={ADMIN} element={<Admin />}>
         <Route path={ADMIN} element={<Dashboard />} />
+        <Route path={`${CHECK_SIGNUPS}/:id`} element={<CheckSignups />} />
         <Route path={CREATE_CLASS} element={<CreateClass />} />
         <Route path={USER_TO_MANAGER} element={<SwitchToAdmin />} />
         <Route path={EDIT_CLASS} element={<EditClass />} />
