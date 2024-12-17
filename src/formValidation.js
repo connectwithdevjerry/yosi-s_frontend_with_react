@@ -71,3 +71,19 @@ export const CreateClassValidationSchema = yup.object({
   updateAgeGroup: yup.boolean(),
   updateVenue: yup.boolean(),
 });
+
+export const updateClassValidationSchema = yup.object({
+  description: yup.string(),
+  dateAndTime: yup.date(),
+  venue: yup.string(),
+  ageMin: yup.number(),
+  ageMax: yup.number(),
+  no_of_max_signups: yup.number(),
+  style: yup.string(),
+  update_no_of_max_signups: yup.boolean(),
+  update_style: yup.boolean(),
+  updateDescription: yup.boolean(),
+  udateDateAndTime: yup.boolean(),
+  updateAgeGroup: yup.boolean(),
+  updateVenue: yup.boolean(),
+});

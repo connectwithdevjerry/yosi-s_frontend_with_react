@@ -12,9 +12,11 @@ import { getAllClasses } from "../Redux/myClassSlice";
 import { ToastContainer } from "react-toastify";
 import myAlert from "../alert";
 import customFetch from "../Redux/axiosObject";
+import Loader from "./Loader";
 const ManageClasses = () => {
   const myRole = useSelector((state) => state.user.myRole);
   const classes = useSelector((state) => state.myClass.all_classes);
+  const loading = useSelector((state) => state.myClass.loading);
   const classMessage = useSelector((state) => state.myClass.classMessage);
 
   // const navigate = useNavigate();
@@ -81,7 +83,17 @@ const ManageClasses = () => {
               </th>
             </tr>
           </thead>
+          {loading && !classes.length && (
+            <div className="w-full flex justify-center">
+              <Loader />
+            </div>
+          )}
           <tbody className="bg-white divide-y divide-gray-200">
+            {!classes.length && (
+              <div className="w-full flex justify-center mt-[120px]">
+                No Items Found!
+              </div>
+            )}
             {classes.map(
               ({
                 _id,
@@ -104,12 +116,14 @@ const ManageClasses = () => {
                     {published ? "published" : "draft"}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <Link
-                      to={`${CHECK_SIGNUPS}/${uniqueRouteId}`}
-                      className="text-green-600 hover:text-pink-900 mr-2"
-                    >
-                      check signups
-                    </Link>
+                    {published && (
+                      <Link
+                        to={`${CHECK_SIGNUPS}/${uniqueRouteId}`}
+                        className="text-green-600 hover:text-pink-900 mr-2"
+                      >
+                        check signups
+                      </Link>
+                    )}
                     {!published && (
                       <Link
                         to={`${EDIT_CLASS}/${uniqueRouteId}`}

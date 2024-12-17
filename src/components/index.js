@@ -9,6 +9,7 @@ import SwitchToAdmin from "./SwitchToAdmin";
 import EditClass from "./EditClass";
 import Activate from "./Activate";
 import CheckSignups from "./CheckSignups";
+import Loader from "./Loader";
 
 export {
   Navbar,
@@ -22,4 +23,5 @@ export {
   SwitchToAdmin,
   Activate,
   CheckSignups,
+  Loader,
 };

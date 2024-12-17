@@ -26,6 +26,10 @@ const SwitchToAdmin = () => {
       .put(`${BASE_URL}${AUTHORIZE}`, values)
       .then((res) => {
         console.log({ chc: res.data });
+        setValues({
+          email: "",
+          permission_type: USER_ROLE,
+        });
         myAlert(res.data.message, !res.data.status);
       })
       .catch((err) => {

@@ -5,6 +5,7 @@ import {
   BASE_URL,
   CREATE_CLASS,
   GET_USERS,
+  INSTRUCTOR_ROLE,
   MANAGE_CLASSES,
 } from "../paths";
 import Transfer from "./Transfer";
@@ -13,16 +14,20 @@ import customFetch from "../Redux/axiosObject";
 import myAlert from "../alert";
 import { ToastContainer } from "react-toastify";
 import { useFormik } from "formik";
-import { CreateClassValidationSchema } from "../formValidation";
+import {
+  CreateClassValidationSchema,
+  updateClassValidationSchema,
+} from "../formValidation";
 
 const EditClass = () => {
   const params = useParams();
+  const navigate = useNavigate();
   const uniqueRouteId = params.id;
-  const url = `${BASE_URL}${BACK_GET_CLASS}/${uniqueRouteId}`;
   const [myClass, setMyClass] = useState({});
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
+    const url = `${BASE_URL}${BACK_GET_CLASS}/${uniqueRouteId}`;
     customFetch
       .get(url)
       .then((res) => {
@@ -54,7 +59,6 @@ const EditClass = () => {
   const { values, errors, touched, handleBlur, handleSubmit, handleChange } =
     useFormik({
       initialValues: {
-        title: myClass.title,
         description: myClass.description,
         dateAndTime: myClass.dateAndTime,
         venue: myClass.venue,
@@ -62,18 +66,18 @@ const EditClass = () => {
         ageMax: myClass.ageMax,
         style: myClass.style,
         no_of_max_signups: myClass.no_of_max_signups,
-        classImage: myClass.classImage,
-        instructor: myClass.instructor,
-        update_no_of_max_signups: myClass.update_no_of_max_signups,
-        update_style: myClass.update_style,
-        updateDescription: myClass.updateDescription,
-        udateDateAndTime: myClass.udateDateAndTime,
-        updateAgeGroup: myClass.updateAgeGroup,
-        updateVenue: myClass.updateVenue,
+        update_no_of_max_signups:
+          myClass?.toBeUpdatedByInstructor?.no_of_max_signups,
+        update_style: myClass?.toBeUpdatedByInstructor?.style,
+        updateDescription: myClass?.toBeUpdatedByInstructor?.description,
+        udateDateAndTime: myClass?.toBeUpdatedByInstructor?.dateAndTime,
+        updateAgeGroup: myClass?.toBeUpdatedByInstructor?.ageGroup,
+        updateVenue: myClass?.toBeUpdatedByInstructor?.venue,
       },
-      validationSchema: CreateClassValidationSchema,
+      enableReinitialize: true,
+      validationSchema: updateClassValidationSchema,
 
-      onSubmit: (values, { resetForm }) => {
+      onSubmit: (values) => {
         const finalValues = {
           ...values,
           published:
@@ -85,12 +89,14 @@ const EditClass = () => {
             !values.updateVenue,
         };
 
+        const url = `${BASE_URL}${BACK_UPDATE_CLASS}/${uniqueRouteId}`;
+
         customFetch
-          .post(`${BASE_URL}${BACK_UPDATE_CLASS}/${uniqueRouteId}`, finalValues)
+          .put(url, finalValues)
           .then((res) => {
             if (res.data.status) {
               myAlert(res.data.message, false);
-              return resetForm();
+              navigate(MANAGE_CLASSES);
             }
             return myAlert(res.data.message, true);
           })
@@ -100,6 +106,8 @@ const EditClass = () => {
           });
       },
     });
+
+  // console.log({ values });
 
   const decide_save_or_publish =
     !values.update_no_of_max_signups &&
@@ -131,29 +139,6 @@ const EditClass = () => {
           method="POST"
           onSubmit={handleSubmit}
         >
-          <div className="mb-6">
-            <label
-              htmlFor="title"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Class Name*:
-            </label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.title}
-              className="w-full p-3 border border-gray-300 rounded-md"
-              placeholder="Enter class title"
-            />
-            <div>
-              {touched.title && errors.title && (
-                <span className="text-sm text-red-500">{errors.title}</span>
-              )}
-            </div>
-          </div>
           <div className="mb-6">
             <label
               htmlFor="style"
@@ -232,31 +217,6 @@ const EditClass = () => {
                 Transfer to Instructor
               </span>
             </label>
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="instructor"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Class Image:
-            </label>
-            <input
-              type="url"
-              id="classImage"
-              name="classImage"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.classImage}
-              className="w-full p-3 border border-gray-300 rounded-md"
-              placeholder="Enter image url here"
-            />
-            <div>
-              {touched.classImage && errors.classImage && (
-                <span className="text-sm text-red-500">
-                  {errors.classImage}
-                </span>
-              )}
-            </div>
           </div>
           <div className="mb-6">
             <label
@@ -385,36 +345,6 @@ const EditClass = () => {
                 Transfer to Instructor
               </span>
             </label>
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="level"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Instructor Name:
-            </label>
-            <select
-              id="instructor"
-              name="instructor"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.instructor}
-              className="w-full p-3 border border-gray-300 rounded-md"
-            >
-              <option value="">Select Instructor</option>
-              {instructors.map((user) => (
-                <option key={user._id} value={user._id}>
-                  {user.firstName} {user.lastName}
-                </option>
-              ))}
-            </select>
-            <div>
-              {touched.instructor && errors.instructor && (
-                <span className="text-sm text-red-500">
-                  {errors.instructor}
-                </span>
-              )}
-            </div>
           </div>
           <div className="text-center">
             <button

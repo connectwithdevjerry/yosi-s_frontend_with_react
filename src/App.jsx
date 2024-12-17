@@ -55,6 +55,8 @@ function App() {
       const expirationDate = decoded_accessToken.exp * 1000;
       const currentTime = Date.now();
 
+      console.log({ decoded_accessToken });
+
       // Check if access token is expired
       if (expirationDate >= currentTime) {
         console.log("Access token active!", expirationDate >= new Date());

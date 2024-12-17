@@ -1,8 +1,18 @@
 import { Link } from "react-router-dom";
-import { ADMIN_ROLE, AUTHORIZE, BASE_URL, GET_USERS, INSTRUCTOR_ROLE, USER_ROLE, USER_TO_MANAGER } from "../paths";
+import {
+  ADMIN_ROLE,
+  AUTHORIZE,
+  BASE_URL,
+  GET_USERS,
+  INSTRUCTOR_ROLE,
+  USER_ROLE,
+  USER_TO_MANAGER,
+} from "../paths";
 import { useEffect, useState } from "react";
 import customFetch from "../Redux/axiosObject";
 import { ToastContainer } from "react-toastify";
+import Loader from "./Loader";
+import { useSelector } from "react-redux";
 const ManageInstructor = () => {
   const permissions = [ADMIN_ROLE, INSTRUCTOR_ROLE];
 
@@ -23,10 +33,13 @@ const ManageInstructor = () => {
     permissions.includes(user.permissionLev)
   );
 
+  const myRole = useSelector((state) => state.user.myRole);
+
   const handleAdminRemove = (email) => {
     customFetch
       .put(`${BASE_URL}${AUTHORIZE}`, {
-        email, permission_type: USER_ROLE
+        email,
+        permission_type: USER_ROLE,
       })
       .then((res) => {
         setUsers(users.filter((user) => user.email !== email));
@@ -36,6 +49,14 @@ const ManageInstructor = () => {
         console.log(err);
       });
   };
+
+  if (myRole !== ADMIN_ROLE) {
+    return (
+      <div>
+        <h1>You are not authorized to access this page.</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gray-100">
@@ -71,23 +92,32 @@ const ManageInstructor = () => {
               </th>
             </tr>
           </thead>
+          {!admin_et_instructors.length && (
+            <div className="flex justify-center mt-[120px]">
+              <Loader />
+            </div>
+          )}
           <tbody className="bg-white divide-y divide-gray-200">
-            {admin_et_instructors.map(({ _id, firstName, lastName, email, permissionLev }) => (
-              <tr key={_id}>
-                <td className="px-6 py-4 whitespace-nowrap">{firstName}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{lastName}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{email}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{permissionLev}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <button
-                    onClick={() => handleAdminRemove(email)}
-                    className="text-red-600 hover:text-red-900"
-                  >
-                    Remove
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {admin_et_instructors.map(
+              ({ _id, firstName, lastName, email, permissionLev }) => (
+                <tr key={_id}>
+                  <td className="px-6 py-4 whitespace-nowrap">{firstName}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{lastName}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{email}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {permissionLev}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <button
+                      onClick={() => handleAdminRemove(email)}
+                      className="text-red-600 hover:text-red-900"
+                    >
+                      Remove
+                    </button>
+                  </td>
+                </tr>
+              )
+            )}
           </tbody>
         </table>
       </div>

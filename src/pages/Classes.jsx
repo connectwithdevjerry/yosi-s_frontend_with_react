@@ -1,4 +1,4 @@
-import { Footer, Navbar } from "../components";
+import { Footer, Loader, Navbar } from "../components";
 import beginner from "../assets/beginner.png";
 import modern from "../assets/modern.png";
 import dance from "../assets/dance-hero.png";
@@ -21,6 +21,10 @@ const Classes = () => {
 
   // console.log({ all_classes });
 
+  // if (loading) {
+  //   return <Loader />;
+  // }
+
   return (
     <div>
       <Navbar />
@@ -42,78 +46,52 @@ const Classes = () => {
         <h3 className="text-4xl font-semibold text-center mb-8">
           Explore Our Classes
         </h3>
+        {!all_classes.length && (
+          <div className="flex justify-center mt-[120px]">
+            <Loader />
+          </div>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* <!-- Class Card 1 --> */}
-          {all_classes.map(
-            ({
-              title,
-              description,
-              classImage,
-              no_of_max_signups,
-              dateAndTime,
-            }) => (
-              <div className="bg-gray-100 rounded-lg shadow-md overflow-hidden">
-                <img
-                  src={classImage ? classImage : beginner}
-                  alt={title}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-6">
-                  <h4 className="text-2xl font-semibold mb-2">{title}</h4>
-                  <p className="text-gray-600 mb-4">{description?description:"Come and Learn Dance at our studio"}</p>
-                  <p className="text-red-600 mb-4"><span>scheduled for: </span><br />{formatDateTime(dateAndTime?dateAndTime:Date())}</p>
-                  <Link
-                    to={LEARNMORE}
-                    className="text-indigo-600 font-medium hover:underline"
-                  >
-                    Learn More
-                  </Link>
+          {all_classes
+            .slice(0, 3)
+            .map(
+              ({
+                title,
+                description,
+                classImage,
+                no_of_max_signups,
+                dateAndTime,
+              }) => (
+                <div className="bg-gray-100 rounded-lg shadow-md overflow-hidden">
+                  <img
+                    src={classImage ? classImage : beginner}
+                    alt={title}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="p-6">
+                    <h4 className="text-2xl font-semibold mb-2">{title}</h4>
+                    <p className="text-gray-600 mb-4">
+                      {description
+                        ? description
+                        : "Come and Learn Dance at our studio"}
+                    </p>
+                    <p className="text-red-600 mb-4">
+                      <span>scheduled for: </span>
+                      <br />
+                      {formatDateTime(dateAndTime ? dateAndTime : Date())}
+                    </p>
+                    <Link
+                      to={LEARNMORE}
+                      className="text-indigo-600 font-medium hover:underline"
+                    >
+                      Learn More
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            )
-          )}
-          {/* <!-- Class Card 2 --> */}
-          {/* <div className="bg-gray-100 rounded-lg shadow-md overflow-hidden">
-            <img
-              src={modern}
-              alt="Modern Dance"
-              className="w-full h-48 object-cover"
-              style={{ opacity: 0.75 }}
-            />
-            <div className="p-6">
-              <h4 className="text-2xl font-semibold mb-2">Modern Dance</h4>
-              <p className="text-gray-600 mb-4">
-                Express yourself with contemporary movements and creative
-                routines.
-              </p>
-              <Link
-                to={LEARNMORE}
-                className="text-indigo-600 font-medium hover:underline"
-              >
-                Learn More
-              </Link>
-            </div>
-          </div>
-          <div className="bg-gray-100 rounded-lg shadow-md overflow-hidden">
-            <img
-              src="advanced.png"
-              alt="Advanced Ballet"
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-6">
-              <h4 className="text-2xl font-semibold mb-2">Advanced Ballet</h4>
-              <p className="text-gray-600 mb-4">
-                Take your ballet skills to the next level with advanced
-                techniques.
-              </p>
-              <Link
-                to={LEARNMORE}
-                className="text-indigo-600 font-medium hover:underline"
-              >
-                Learn More
-              </Link>
-            </div>
-          </div> */}
+              )
+            )}
+
           <Link
             to={LEARNMORE}
             className="text-indigo-600 font-medium hover:underline"

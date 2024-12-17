@@ -15,7 +15,7 @@ const Navbar = ({ isAuthPage }) => {
           className="text-lg font-bold text-gray-800"
           style={{ color: "#b40895" }}
         >
-          Maimi Dance Festival
+          Mami Dance Festival
         </Link>
       </div>
       <nav className="hidden md:flex space-x-6">

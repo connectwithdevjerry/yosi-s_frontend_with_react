@@ -6,29 +6,27 @@ import myAlert from "../alert";
 import { ToastContainer } from "react-toastify";
 import customFetch from "../Redux/axiosObject";
 import { useEffect, useState } from "react";
+import Loader from "./Loader";
 
 const CheckSignups = () => {
   const params = useParams();
   const id = params.id;
   const [signups, setSignups] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const url = `${BASE_URL}${GET_CLASSES_ADMIN}`;
     customFetch.get(url).then((response) => {
       if (response.data.status) {
-        
         setSignups(response.data.data);
+        setLoading(false)
         return;
       }
       return myAlert(response.data.message, true);
     });
   }, []);
 
-  const current_class = signups.filter(
-    (cclass) => cclass.uniqueRouteId === id
-  );
-
-  console.log('data', current_class)
+  const current_class = signups.filter((cclass) => cclass.uniqueRouteId === id);
 
   const students = current_class[0]?.students;
   const title = current_class[0]?.title;
@@ -93,6 +91,16 @@ const CheckSignups = () => {
               </th>
             </tr>
           </thead>
+          {loading && (
+            <div className="w-full flex justify-center mt-[120px]">
+              <Loader />
+            </div>
+          )}
+          {!students?.length && !loading && (
+            <div className="w-full flex justify-center mt-[120px]">
+              <span className="text-center">No Items Found</span>
+            </div>
+          )}
           <tbody>
             {students?.map((student, ind) => (
               <tr key={student._id}>

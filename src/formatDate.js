@@ -1,4 +1,4 @@
-function formatDateTime(dateString) {
+function formatDateTime(dateString, admin = false) {
   const date = new Date(dateString);
 
   // Days of the week
@@ -63,6 +63,11 @@ function formatDateTime(dateString) {
   }${ampm}`;
 
   // Final formatted string
+  if (admin) {
+    const formattedDate = `${dayName},${day} ${month} , ${year}`;
+    return `${formattedDate}`;
+  }
+
   return `${dayName}, ${day}${daySuffix} ${month}, ${year} at ${time}`;
 }
 export default formatDateTime;

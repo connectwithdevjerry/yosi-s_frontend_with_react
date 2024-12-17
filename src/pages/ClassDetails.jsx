@@ -49,6 +49,7 @@ const ClassDetails = () => {
             ageMax,
             venue,
             style,
+            instructor,
             no_of_current_signups,
             uniqueRouteId,
           }) => (
@@ -92,6 +93,11 @@ const ClassDetails = () => {
                     <span className="font-semibold text-gray-800">
                       Number of People:{" "}
                       {no_of_max_signups ? no_of_max_signups : 0}
+                    </span>
+                  </p>
+                  <p>
+                    <span className="font-semibold text-gray-800">
+                      Instructor: {instructor.firstName}
                     </span>
                   </p>
                   <p>
