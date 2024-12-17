@@ -1,44 +1,69 @@
-import { Footer, Navbar } from "../components";
-import { Link } from "react-router-dom";
-import beginner from "../assets/beginner.png";
-import { useEffect } from "react";
-import { getAllClasses } from "../Redux/myClassSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { Loader, Navbar } from "../components";
+import { getAllClasses } from "../Redux/myClassSlice";
+import { useEffect } from "react";
 import formatDateTime from "../formatDate";
 import customFetch from "../Redux/axiosObject";
-import { BASE_URL, JOIN_CLASS } from "../paths";
-import myAlert from "../alert";
+import { BASE_URL, CLASSES, REMOVE_ME_FROM_CLASS, USER_ROLE } from "../paths";
 import { ToastContainer } from "react-toastify";
+import myAlert from "../alert";
+import { Link } from "react-router";
 
-const ClassDetails = () => {
+const MyClasses = () => {
   const dispatch = useDispatch();
-
   const { all_classes, loading } = useSelector((state) => state.myClass);
-  const role = useSelector((state) => state.myClass.myRole);
+//   const role = useSelector((state) => state.user.myRole);
+  const myProfile = useSelector((state) => state.user.myProfile);
+
+  const my_id = myProfile.aud;
 
   useEffect(() => {
-    dispatch(getAllClasses(role));
+    dispatch(getAllClasses(USER_ROLE));
   }, []);
 
-  const handleJoin = (id) => {
-    // Add logic to join the class
+  const myClasses = all_classes.filter((classs) =>
+    classs.students.includes(my_id)
+  );
+
+  const handleRemove = (id) => {
+    const url = `${BASE_URL}${REMOVE_ME_FROM_CLASS}/${id}`;
     customFetch
-      .put(`${BASE_URL}${JOIN_CLASS}/${id}`)
-      .then((res) => {
-        myAlert(res?.data?.message, !res?.data?.status);
+      .delete(url)
+      .then((response) => {
+        if (response?.data?.status) {
+          dispatch(getAllClasses(USER_ROLE));
+          myAlert(response.data.message, response?.data?.status);
+          return;
+        }
+        myAlert(response.data.message, response?.data?.status);
       })
-      .catch((err) => {
-        console.log(err);
-        myAlert(err.message, true);
+      .catch((error) => {
+        myAlert(error.message, false);
+        console.log(error);
       });
   };
 
+  if (loading) return <Loader />;
+
   return (
-    <div>
+    <>
       <Navbar />
-      <section className="container mx-auto px-6 py-16 pt-8">
-        <ToastContainer limit={2} />
-        {all_classes.map(
+      <div className="bg-blue-700 px-2 py-2 text-white my-2 font-bold text-lg">
+        <p className="text-center">A list of classes you've signed up for</p>
+      </div>
+      <section className="container mx-auto px-6 py-12">
+        <div className="toast-container">
+          <ToastContainer limit={2} />
+        </div>
+        {myClasses.length === 0 && !loading && (
+          <div className="text-center">
+            <p>
+              You haven't joined any class yet {" "}
+              <Link to={CLASSES} className="text-red-600 underline italic">Check classes</Link>
+            </p>
+          </div>
+        )}
+        {myClasses.map(
           ({
             _id,
             title,
@@ -51,10 +76,13 @@ const ClassDetails = () => {
             venue,
             style,
             instructor,
-            students,
+            no_of_current_signups,
             uniqueRouteId,
           }) => (
-            <div key={_id} className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div
+              key={_id}
+              className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12"
+            >
               <div>
                 <img
                   src={classImage ? classImage : beginner}
@@ -92,32 +120,16 @@ const ClassDetails = () => {
                   </p>
                   <p>
                     <span className="font-semibold text-gray-800">
-                      Number of People:{" "}
-                      {no_of_max_signups ? no_of_max_signups : 0}
-                    </span>
-                  </p>
-                  <p>
-                    <span className="font-semibold text-gray-800">
                       Instructor: {instructor?.firstName}
-                    </span>
-                  </p>
-                  <p>
-                    <span className="font-semibold text-gray-800">
-                      Slots Left:
-                    </span>
-                    <span className="text-red-500">
-                      {" "}
-                      {no_of_max_signups - students.length} Slots
-                      Remaining
                     </span>
                   </p>
                 </div>
                 <div className="mt-6">
                   <button
-                    onClick={() => handleJoin(uniqueRouteId)}
-                    className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition"
+                    onClick={() => handleRemove(uniqueRouteId)}
+                    className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition"
                   >
-                    Join Now
+                    Remove Me
                   </button>
                 </div>
               </div>
@@ -125,9 +137,8 @@ const ClassDetails = () => {
           )
         )}
       </section>
-      <Footer />
-    </div>
+    </>
   );
 };
 
-export default ClassDetails;
+export default MyClasses;

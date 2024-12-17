@@ -1,6 +1,6 @@
 import logo from "../assets/maimi-dance-logo.png";
 import { Link } from "react-router-dom";
-import { CLASSES, LEARNMORE, SIGNIN, SIGNUP } from "../paths";
+import { CLASSES, LEARNMORE, SIGNIN, SIGNUP, MY_CLASSES } from "../paths";
 import { useSelector } from "react-redux";
 
 const Navbar = ({ isAuthPage }) => {
@@ -19,13 +19,15 @@ const Navbar = ({ isAuthPage }) => {
         </Link>
       </div>
       <nav className="hidden md:flex space-x-6">
-        <Link to={""} className="hover:text-gray-500">
-          STUDIO
-        </Link>
-        <Link to={LEARNMORE} className="hover:text-gray-500">
+        <Link to={LEARNMORE} className="hover:text-gray-100 text-gray-200 bg-pink-600 hover:bg-pink-900 px-2 py-1 rounded">
           CLASSES
         </Link>
-        <Link to={""} className="hover:text-gray-500">
+        {!isAuthPage && isAuth && (
+          <Link to={MY_CLASSES} className="hover:text-gray-100 text-gray-200 bg-pink-600 hover:bg-pink-900 px-2 py-1 rounded">
+            MY CLASSES
+          </Link>
+        )}
+        <Link to={""} className="hover:text-gray-100 text-gray-200 bg-pink-600 hover:bg-pink-900 px-2 py-1 rounded">
           CONTACT
         </Link>
       </nav>

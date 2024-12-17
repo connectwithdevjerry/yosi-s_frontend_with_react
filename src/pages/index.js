@@ -6,6 +6,7 @@ import Admin from "./Admin";
 import ForgotPassword from "./ForgotPassword";
 import ResetLinkSent from "./ResetLinkSent";
 import ResetPassword from "./ResetPassword";
+import MyClasses from "./MyClasses";
 
 export {
   ClassDetails,
@@ -16,4 +17,5 @@ export {
   ForgotPassword,
   ResetLinkSent,
   ResetPassword,
+  MyClasses
 };

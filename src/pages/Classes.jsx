@@ -57,13 +57,17 @@ const Classes = () => {
             .slice(0, 3)
             .map(
               ({
+                _id,
                 title,
                 description,
                 classImage,
                 no_of_max_signups,
                 dateAndTime,
               }) => (
-                <div className="bg-gray-100 rounded-lg shadow-md overflow-hidden">
+                <div
+                  key={_id}
+                  className="bg-gray-100 rounded-lg shadow-md overflow-hidden"
+                >
                   <img
                     src={classImage ? classImage : beginner}
                     alt={title}

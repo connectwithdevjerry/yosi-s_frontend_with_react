@@ -16,12 +16,15 @@ export const DEL_CLASS = "/admin/manage-classes/del";
 export const ACTIVATE = "/confirm_email_address/:token";
 export const RESET_LINK_SENT = "/resetlinksent/:email";
 export const RESET_PASSWORD = "/resetpassword/:token";
+export const MY_CLASSES = "/myclasses";
 
 // Backend paths
+// export const BASE_URL = "http://localhost:5000/";
 export const BASE_URL = "https://yosi-s-backend-with-express.onrender.com/";
 export const ALLOWED_ORIGIN = "*";
 export const BACK_SIGNIN = "user/signin";
 export const GET_NEW_TOKEN = "user/get_access";
+export const REMOVE_ME_FROM_CLASS = "classes/remove_from_class";
 export const BACK_SIGNUP = "user/signup";
 export const GET_USERS = "user/get_users";
 export const BACK_ACTIVATE = "user/activate";

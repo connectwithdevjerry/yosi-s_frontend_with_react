@@ -3,6 +3,7 @@ import {
   EDIT_CLASS,
   MANAGE_CLASSES,
   MANAGE_INSTRUCTORS,
+  MY_CLASSES,
   SIGNIN,
   SIGNUP,
   USER_TO_MANAGER,
@@ -10,6 +11,7 @@ import {
 import {
   Classes,
   ForgotPassword,
+  MyClasses,
   ResetLinkSent,
   ResetPassword,
   SignIn,
@@ -41,6 +43,7 @@ import { setMyProfile } from "./Redux/userSlice";
 import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -80,6 +83,7 @@ function App() {
       <Route path={RESET_PASSWORD} element={<ResetPassword />} />
       <Route path={RESET_LINK_SENT} element={<ResetLinkSent />} />
       <Route path={ACTIVATE} element={<Activate />} />
+      <Route path={MY_CLASSES} element={<MyClasses />} />
       <Route path={FORGOT_PASSWORD} element={<ForgotPassword />} />
       <Route path={ADMIN} element={<Admin />}>
         <Route path={ADMIN} element={<Dashboard />} />

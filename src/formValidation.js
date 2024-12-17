@@ -3,10 +3,6 @@ export const signInValidationSchema = yup.object({
   email: yup.string().email().required("Email is required"),
   password: yup
     .string()
-    .matches(
-      "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$",
-      "Min 8 char, at least one letter, one number and one special character"
-    )
     .required("password is required!"),
 });
 
