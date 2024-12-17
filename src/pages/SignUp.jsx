@@ -89,7 +89,7 @@ const SignUp = () => {
                 htmlFor="name"
                 className="block text-gray-700 font-medium mb-2"
               >
-                Full Name
+                Last Name
               </label>
               <input
                 placeholder="Last Name"
