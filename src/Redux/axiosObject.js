@@ -5,11 +5,7 @@ const customFetch = axios.create({
   baseURL: BASE_URL,
   headers: {
     "Content-type": "application/json",
-    "Access-Control-Allow-Origin": [
-      ALLOWED_ORIGIN,
-      "https://yosi-frontend-with-react.vercel.app/",
-      "https://yosi-s-backend-with-express.onrender.com/",
-    ],
+    "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
   },
   withCredentials: true,
 });
