@@ -12,7 +12,7 @@ const Dashboard = () => {
     customFetch
       .get(`${BASE_URL}${GET_USERS}`)
       .then((res) => {
-        setUsers(res.data.data);
+        setUsers(res?.data?.data);
       })
       .catch((err) => {});
   }, []);
@@ -31,7 +31,11 @@ const Dashboard = () => {
       <header className="flex justify-between items-center mb-8 py-8">
         <div>
           <h2 className="text-2xl font-bold text-gray-800">Welcome, Admin!</h2>
-          <Link to={CLASSES} target="_blank" className="text-pink-900 underline italic">
+          <Link
+            to={CLASSES}
+            target="_blank"
+            className="text-pink-900 underline italic"
+          >
             Go to Classes
           </Link>
         </div>
@@ -89,18 +93,29 @@ const Dashboard = () => {
             </thead>
 
             <tbody>
-              {users.map(({ _id, firstName, dateCreated, lastName, email, isActive }) => (
-                <tr key={_id}>
-                  <td className="p-3 border-b">
-                    {firstName} {lastName}
-                  </td>
-                  <td className="p-3 border-b">{email}</td>
-                  <td className="p-3 border-b">{formatDateTime(dateCreated, true)}</td>
-                  <td className="p-3 border-b text-green-600">
-                    {isActive ? "active" : "pending"}
-                  </td>
-                </tr>
-              ))}
+              {users.map(
+                ({
+                  _id,
+                  firstName,
+                  dateCreated,
+                  lastName,
+                  email,
+                  isActive,
+                }) => (
+                  <tr key={_id}>
+                    <td className="p-3 border-b">
+                      {firstName} {lastName}
+                    </td>
+                    <td className="p-3 border-b">{email}</td>
+                    <td className="p-3 border-b">
+                      {formatDateTime(dateCreated, true)}
+                    </td>
+                    <td className="p-3 border-b text-green-600">
+                      {isActive ? "active" : "pending"}
+                    </td>
+                  </tr>
+                )
+              )}
             </tbody>
           </table>
         </div>

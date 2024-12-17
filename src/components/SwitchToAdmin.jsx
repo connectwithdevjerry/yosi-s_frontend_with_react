@@ -30,7 +30,7 @@ const SwitchToAdmin = () => {
           email: "",
           permission_type: USER_ROLE,
         });
-        myAlert(res.data.message, !res.data.status);
+        myAlert(res?.data?.message, !res?.data?.status);
       })
       .catch((err) => {
         console.log(err);

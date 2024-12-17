@@ -31,10 +31,10 @@ const EditClass = () => {
     customFetch
       .get(url)
       .then((res) => {
-        if (res.data.status) {
-          setMyClass(res.data.data);
+        if (res?.data?.status) {
+          setMyClass(res?.data?.data);
         }
-        return myAlert(res.data.message, true);
+        return myAlert(res?.data?.message, true);
       })
       .catch((err) => {
         return myAlert(err.message, true);
@@ -45,7 +45,7 @@ const EditClass = () => {
     customFetch
       .get(`${BASE_URL}${GET_USERS}`)
       .then((res) => {
-        setUsers(res.data.data);
+        setUsers(res?.data?.data);
       })
       .catch((err) => {
         console.log(err);
@@ -94,11 +94,11 @@ const EditClass = () => {
         customFetch
           .put(url, finalValues)
           .then((res) => {
-            if (res.data.status) {
-              myAlert(res.data.message, false);
+            if (res?.data?.status) {
+              myAlert(res?.data?.message, false);
               navigate(MANAGE_CLASSES);
             }
-            return myAlert(res.data.message, true);
+            return myAlert(res?.data?.message, true);
           })
           .catch((err) => {
             console.log(err);

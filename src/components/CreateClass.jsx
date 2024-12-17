@@ -22,7 +22,7 @@ const CreateClass = () => {
     customFetch
       .get(`${BASE_URL}${GET_USERS}`)
       .then((res) => {
-        setUsers(res.data.data);
+        setUsers(res?.data?.data);
       })
       .catch((err) => {
         console.log(err);
@@ -70,11 +70,11 @@ const CreateClass = () => {
         customFetch
           .post(`${BASE_URL}${BACK_CREATE_CLASS}`, finalValues)
           .then((res) => {
-            if(res.data.status){
-              myAlert(res.data.message, false);
+            if (res?.data?.status) {
+              myAlert(res?.data?.message, false);
               return resetForm();
             }
-            return myAlert(res.data.message, true);
+            return myAlert(res?.data?.message, true);
           })
           .catch((err) => {
             console.log(err);

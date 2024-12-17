@@ -36,11 +36,11 @@ const ManageClasses = () => {
     const url = `${BASE_URL}${DELETE_CLASS}/${id}`;
 
     customFetch.delete(url).then((res) => {
-      if (res.data.status) {
+      if (res?.data?.status) {
         dispatch(getAllClasses(myRole));
-        return myAlert(res.data.message, !res.data.status);
+        return myAlert(res?.data?.message, !res?.data?.status);
       }
-      return myAlert(res.data.message, !res.status);
+      return myAlert(res?.data?.message, !res.status);
     });
   };
 

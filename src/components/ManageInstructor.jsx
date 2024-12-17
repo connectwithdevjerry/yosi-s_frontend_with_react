@@ -22,7 +22,7 @@ const ManageInstructor = () => {
     customFetch
       .get(`${BASE_URL}${GET_USERS}`)
       .then((res) => {
-        setUsers(res.data.data);
+        setUsers(res?.data?.data);
       })
       .catch((err) => {
         console.log(err);
@@ -43,7 +43,7 @@ const ManageInstructor = () => {
       })
       .then((res) => {
         setUsers(users.filter((user) => user.email !== email));
-        myAlert(res.data.message, !res.data.status);
+        myAlert(res?.data?.message, !res?.data?.status);
       })
       .catch((err) => {
         console.log(err);

@@ -25,7 +25,7 @@ const ClassDetails = () => {
     customFetch
       .put(`${BASE_URL}${JOIN_CLASS}/${id}`)
       .then((res) => {
-        myAlert(res.data.message, !res.data.status);
+        myAlert(res?.data?.message, !res?.data?.status);
       })
       .catch((err) => {
         console.log(err);

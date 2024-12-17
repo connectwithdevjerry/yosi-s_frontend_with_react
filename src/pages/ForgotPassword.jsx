@@ -23,7 +23,7 @@ const ForgotPassword = () => {
           .post(BACK_FORGOT, values)
           .then((res) => {
             console.log(res.data);
-            if (res.data.status)
+            if (res?.data?.status)
               return navigate(`/resetlinksent/${values.email}`);
           })
           .catch((err) => {
