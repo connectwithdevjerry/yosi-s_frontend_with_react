@@ -139,7 +139,7 @@ export const userSlice = createSlice({
 export const getUser = createAsyncThunk("crud/getUser", async (credentials) => {
   try {
     const response = await customFetch.post(BACK_SIGNIN, credentials);
-    return response.data;
+    return response?.data;
   } catch (error) {
     console.error(error);
   }
@@ -150,7 +150,7 @@ export const createUser = createAsyncThunk(
   async (credentials) => {
     try {
       const response = await customFetch.post(BACK_SIGNUP, credentials);
-      return response.data;
+      return response?.data;
     } catch (error) {
       console.error(error);
     }
@@ -162,8 +162,8 @@ export const resetPassword = createAsyncThunk(
   async (values) => {
     try {
       const response = await customFetch.post(BACK_RESET_PASSWORD, values);
-      console.log({ values, res: response.data });
-      return response.data;
+      console.log({ values, res: response?.data });
+      return response?.data;
     } catch (error) {
       console.error(error);
     }

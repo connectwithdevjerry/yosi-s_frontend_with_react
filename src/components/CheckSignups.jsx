@@ -17,12 +17,12 @@ const CheckSignups = () => {
   useEffect(() => {
     const url = `${BASE_URL}${GET_CLASSES_ADMIN}`;
     customFetch.get(url).then((response) => {
-      if (response.data.status) {
-        setSignups(response.data.data);
-        setLoading(false)
+      if (response?.data?.status) {
+        setSignups(response?.data?.data);
+        setLoading(false);
         return;
       }
-      return myAlert(response.data.message, true);
+      return myAlert(response?.data?.message, true);
     });
   }, []);
 

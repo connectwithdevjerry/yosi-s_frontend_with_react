@@ -22,7 +22,7 @@ const ForgotPassword = () => {
         customFetch
           .post(BACK_FORGOT, values)
           .then((res) => {
-            console.log(res.data);
+            console.log(res?.data);
             if (res?.data?.status)
               return navigate(`/resetlinksent/${values.email}`);
           })

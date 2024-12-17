@@ -25,7 +25,7 @@ const SwitchToAdmin = () => {
     customFetch
       .put(`${BASE_URL}${AUTHORIZE}`, values)
       .then((res) => {
-        console.log({ chc: res.data });
+        console.log({ chc: res?.data });
         setValues({
           email: "",
           permission_type: USER_ROLE,

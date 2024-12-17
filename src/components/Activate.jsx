@@ -12,7 +12,7 @@ const Activate = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios.get(`${BASE_URL}${BACK_ACTIVATE}/${token}`).then((res) => {
-      console.log("data", res.data);
+      console.log("data", res?.data);
       if (!res?.data?.status)
         return myAlert("Token Expired or token does not exist!", true);
       myAlert("Your account has been activated!");
