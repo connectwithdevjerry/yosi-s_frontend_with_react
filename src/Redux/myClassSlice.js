@@ -44,7 +44,7 @@ export const myClassSlice = createSlice({
       .addCase(getAllClasses.fulfilled, (state, action) => {
         console.log("getting all classes...");
         state.loading = false;
-        if (!action.payload.status) {
+        if (!action?.payload?.status) {
           state.classMessage = "No classes found!";
           return;
         }

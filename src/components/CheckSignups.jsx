@@ -59,7 +59,7 @@ const CheckSignups = () => {
         <div>
           <Link
             to={MANAGE_CLASSES}
-            class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded"
+            className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded"
           >
             BACK
           </Link>
@@ -67,7 +67,7 @@ const CheckSignups = () => {
         <div>
           <button
             onClick={() => exportToCSV(students, `${id}.csv`)}
-            class="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded"
+            className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded"
           >
             Download CSV
           </button>
