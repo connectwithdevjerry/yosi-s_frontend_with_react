@@ -5,9 +5,12 @@ const customFetch = axios.create({
   baseURL: BASE_URL,
   headers: {
     "Content-type": "application/json",
-    "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
+    "Access-Control-Allow-Origin": [
+      ALLOWED_ORIGIN,
+      "https://yosi-frontend-with-react.vercel.app/",
+    ],
   },
-  // withCredentials: true,
+  withCredentials: true,
 });
 
 customFetch.interceptors.request.use(
