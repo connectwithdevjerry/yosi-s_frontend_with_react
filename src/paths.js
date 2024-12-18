@@ -20,8 +20,8 @@ export const MY_CLASSES = "/myclasses";
 export const ADD_STUDENT_TO_CLASS = "/admin/manage-classes/assign_to_class";
 
 // Backend paths
-export const BASE_URL = "http://localhost:5000/";
-// export const BASE_URL = "https://yosi-s-backend-with-express.onrender.com/";
+// export const BASE_URL = "http://localhost:5000/";
+export const BASE_URL = "https://yosi-s-backend-with-express.onrender.com/";
 export const ALLOWED_ORIGIN = "*";
 export const BACK_SIGNIN = "user/signin";
 export const GET_NEW_TOKEN = "user/get_access";
