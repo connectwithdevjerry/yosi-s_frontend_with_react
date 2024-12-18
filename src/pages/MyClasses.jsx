@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Loader, Navbar } from "../components";
+import { Footer, Loader, Navbar } from "../components";
 import { getAllClasses } from "../Redux/myClassSlice";
 import { useEffect } from "react";
 import formatDateTime from "../formatDate";
@@ -151,6 +151,7 @@ const MyClasses = () => {
           )
         )}
       </section>
+      <Footer />
     </>
   );
 };
