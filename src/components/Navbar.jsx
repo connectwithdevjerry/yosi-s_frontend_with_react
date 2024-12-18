@@ -12,7 +12,7 @@ const Navbar = ({ isAuthPage }) => {
         <img src={logo} alt="logo" className="h-12" />
         <Link
           to={CLASSES}
-          className="text-lg font-bold text-gray-800 md:text-md sm:text-sm"
+          className="text-lg font-bold text-gray-800 md:hidden sm:hidden"
           style={{ color: "#b40895" }}
         >
           Mami Dance Festival
