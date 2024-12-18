@@ -26,7 +26,7 @@ const MyClasses = () => {
   );
 
   const analyzeMyQuota = (allQuotas) => {
-    console.log({ allQuotas });
+    // console.log({ allQuotas });
     const myQuotas = allQuotas.filter((quotas) => quotas.student === my_id);
     return myQuotas[0]?.quota;
   };
@@ -45,7 +45,7 @@ const MyClasses = () => {
       })
       .catch((error) => {
         myAlert(error.message, false);
-        console.log(error);
+        // console.log(error);
       });
   };
 

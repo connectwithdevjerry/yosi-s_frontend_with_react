@@ -12,22 +12,31 @@ const Navbar = ({ isAuthPage }) => {
         <img src={logo} alt="logo" className="h-12" />
         <Link
           to={CLASSES}
-          className="text-lg font-bold text-gray-800"
+          className="text-lg font-bold text-gray-800 md:text-md sm:text-sm"
           style={{ color: "#b40895" }}
         >
           Mami Dance Festival
         </Link>
       </div>
       <nav className="hidden md:flex space-x-6">
-        <Link to={LEARNMORE} className="hover:text-gray-100 text-gray-200 bg-pink-600 hover:bg-pink-900 px-2 py-1 rounded">
+        <Link
+          to={LEARNMORE}
+          className="hover:text-gray-100 text-gray-200 bg-pink-600 hover:bg-pink-900 px-2 py-1 rounded"
+        >
           CLASSES
         </Link>
         {!isAuthPage && isAuth && (
-          <Link to={MY_CLASSES} className="hover:text-gray-100 text-gray-200 bg-pink-600 hover:bg-pink-900 px-2 py-1 rounded">
+          <Link
+            to={MY_CLASSES}
+            className="hover:text-gray-100 text-gray-200 bg-pink-600 hover:bg-pink-900 px-2 py-1 rounded"
+          >
             MY CLASSES
           </Link>
         )}
-        <Link to={""} className="hover:text-gray-100 text-gray-200 bg-pink-600 hover:bg-pink-900 px-2 py-1 rounded">
+        <Link
+          to={""}
+          className="hover:text-gray-100 text-gray-200 bg-pink-600 hover:bg-pink-900 px-2 py-1 rounded"
+        >
           CONTACT
         </Link>
       </nav>
