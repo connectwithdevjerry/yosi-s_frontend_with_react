@@ -11,16 +11,18 @@ const Navbar = ({ isAuthPage }) => {
   return (
     <header className="container mx-auto px-6 py-4 flex justify-between items-center">
       {/* Logo Section */}
-      <div className="flex items-center">
-        <img src={logo} alt="logo" className="h-12" />
-        <Link
-          to={CLASSES}
-          className="text-sm md:text-md lg:text-lg font-bold text-gray-800 ml-2"
-          style={{ color: "#b40895" }}
-        >
-          Mami Dance Festival
-        </Link>
-      </div>
+      <Link
+        to={CLASSES}
+        className="text-sm md:text-md lg:text-lg font-bold text-pink-800 ml-2"
+        style={{ color: "#b40895" }}
+      >
+        <div className="flex items-center">
+          <img src={logo} alt="logo" className="h-12" />
+          <span className="text-sm md:text-md lg:text-lg font-bold text-pink-800 ml-2">
+            Mami Dance Festival
+          </span>
+        </div>
+      </Link>
 
       {/* Hamburger Menu for Mobile */}
       <div className="md:hidden">
