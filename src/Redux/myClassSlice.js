@@ -6,6 +6,7 @@ import {
   BASE_URL,
   GET_CLASSES,
   GET_CLASSES_ADMIN,
+  GET_FILTERED_CLASSES,
   GET_USERS,
   INSTRUCTOR_ROLE,
   USER_ROLE,
@@ -13,6 +14,7 @@ import {
 
 const initialState = {
   all_classes: [],
+  myFilteredClasses: [],
   classMessage: "",
   loading: false,
   inappLoading: false,
@@ -26,12 +28,6 @@ export const myClassSlice = createSlice({
   reducers: {
     // handleCheckOut: (state, action) => {
     //   console.log("this is handlecheckout function!");
-    // },
-    // getCartItems: (state, action) => {
-    //   state.orderDetails.items = cart;
-    //   // console.log(cart)
-    //   const updatedOrderDetails = updateOrderDetails(cart);
-    //   state.orderDetails = updatedOrderDetails;
     // },
   },
   extraReducers: (builder) => {
@@ -52,6 +48,26 @@ export const myClassSlice = createSlice({
         console.log("all classes", action);
       })
       .addCase(getAllClasses.rejected, (state) => {
+        console.log("couldn't get classes...");
+        state.loading = false;
+        state.classMessage = "Error Loading Product";
+      })
+      .addCase(getFilteredClasses.pending, (state) => {
+        console.log("getting filtered classes...");
+        state.loading = true;
+        state.classMessage = "";
+      })
+      .addCase(getFilteredClasses.fulfilled, (state, action) => {
+        console.log("getting filtered classes...");
+        state.loading = false;
+        if (!action?.payload?.status) {
+          state.classMessage = "No classes found!";
+          return;
+        }
+        state.myFilteredClasses = action.payload?.data;
+        console.log("all classes", action);
+      })
+      .addCase(getFilteredClasses.rejected, (state) => {
         console.log("couldn't get classes...");
         state.loading = false;
         state.classMessage = "Error Loading Product";
@@ -105,10 +121,26 @@ export const getAllClasses = createAsyncThunk(
 
     try {
       const response = await customFetch.get(url);
-      console.log({ myClasses: response?.data });
+      console.log({ myFilteredClasses: response?.data });
       return response?.data;
     } catch (error) {
       console.error(error);
+    }
+  }
+);
+
+export const getFilteredClasses = createAsyncThunk(
+  "myClass/getFilteredClasses",
+  async (values) => {
+    const url = `${BASE_URL}${GET_FILTERED_CLASSES}/${values.ageMin}/${values.ageMax}`;
+
+    try {
+      const response = await customFetch.get(url);
+      console.log({ myFilteredClasses: response?.data });
+      return response?.data;
+    } catch (error) {
+      console.error(error);
+      return;
     }
   }
 );

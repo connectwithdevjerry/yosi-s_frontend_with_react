@@ -1,9 +1,7 @@
 import * as yup from "yup";
 export const signInValidationSchema = yup.object({
   email: yup.string().email().required("Email is required"),
-  password: yup
-    .string()
-    .required("password is required!"),
+  password: yup.string().required("password is required!"),
 });
 
 export const signupValidationSchema = yup.object({
@@ -24,6 +22,12 @@ export const signupValidationSchema = yup.object({
       "Min 8 char, at least one letter, one number and one special character"
     )
     .required("cpassword is required!"),
+});
+
+export const studentRegValidationSchema = yup.object({
+  firstName: yup.string().required("Please enter a first name"),
+  lastName: yup.string().required("Please enter a last name"),
+  email: yup.string().email().required("Please enter a valid email address"),
 });
 
 export const resetPasswordSchema = yup.object({

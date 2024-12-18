@@ -1,5 +1,6 @@
 import { CLASSES, CONTACT } from "../paths";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 const Footer = () => {
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
@@ -7,6 +8,7 @@ const Footer = () => {
     window.location.href = CLASSES;
   };
 
+  const isAuth = useSelector((state) => state.user.isAuth);
   const accessToken = localStorage.getItem("accessToken");
 
   return (
@@ -18,7 +20,7 @@ const Footer = () => {
           </Link>
         </div>
         <nav className="space-x-6">
-          {accessToken && (
+          {accessToken && isAuth && (
             <button
               onClick={handleLogout}
               className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"

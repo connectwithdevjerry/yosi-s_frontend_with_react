@@ -5,6 +5,7 @@ import {
   CHECK_SIGNUPS,
   BASE_URL,
   DELETE_CLASS,
+  ADD_STUDENT_TO_CLASS,
 } from "../paths";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -116,6 +117,14 @@ const ManageClasses = () => {
                     {published ? "published" : "draft"}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    {published && (
+                      <Link
+                        to={`${ADD_STUDENT_TO_CLASS}/${uniqueRouteId}`}
+                        className="text-pink-600 hover:text-pink-900 mr-2"
+                      >
+                        Add Students
+                      </Link>
+                    )}
                     {published && (
                       <Link
                         to={`${CHECK_SIGNUPS}/${uniqueRouteId}`}

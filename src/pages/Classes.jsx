@@ -95,7 +95,8 @@ const Classes = () => {
                 </div>
               )
             )}
-
+        </div>
+        <div className="mt-8">
           <Link
             to={LEARNMORE}
             className="text-indigo-600 font-medium hover:underline"

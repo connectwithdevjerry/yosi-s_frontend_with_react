@@ -17,6 +17,7 @@ export const ACTIVATE = "/confirm_email_address/:token";
 export const RESET_LINK_SENT = "/resetlinksent/:email";
 export const RESET_PASSWORD = "/resetpassword/:token";
 export const MY_CLASSES = "/myclasses";
+export const ADD_STUDENT_TO_CLASS = "/admin/manage-classes/assign_to_class";
 
 // Backend paths
 // export const BASE_URL = "http://localhost:5000/";
@@ -26,11 +27,14 @@ export const BACK_SIGNIN = "user/signin";
 export const GET_NEW_TOKEN = "user/get_access";
 export const REMOVE_ME_FROM_CLASS = "classes/remove_from_class";
 export const BACK_SIGNUP = "user/signup";
+export const STUDENT_REG_BY_ADMIN = "user/admin_super_signup";
 export const GET_USERS = "user/get_users";
 export const BACK_ACTIVATE = "user/activate";
 export const BACK_FORGOT = "user/forgot_password";
 export const BACK_RESET_PASSWORD = "user/reset_password";
 export const GET_CLASSES = "classes/get_classes";
+export const GET_FILTERED_CLASSES = "classes/get_filtered_classes";
+export const BACK_ADD_STUDENT_TO_CLASS = "classes/assign_to_class";
 export const BACK_GET_CLASS = "classes/get_class";
 export const GET_CLASSES_ADMIN = "classes/get_classes_admin";
 export const JOIN_CLASS = "classes/join_class";

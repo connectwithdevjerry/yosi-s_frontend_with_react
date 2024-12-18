@@ -1,6 +1,8 @@
 import {
+  ADD_STUDENT_TO_CLASS,
   CHECK_SIGNUPS,
   EDIT_CLASS,
+  INSTRUCTOR_ROLE,
   MANAGE_CLASSES,
   MANAGE_INSTRUCTORS,
   MY_CLASSES,
@@ -16,6 +18,7 @@ import {
   ResetPassword,
   SignIn,
   SignUp,
+  StudentReg,
 } from "./pages";
 import { Route, Routes } from "react-router-dom";
 import { CLASSES, LEARNMORE, ACTIVATE } from "./paths";
@@ -43,7 +46,6 @@ import { setMyProfile } from "./Redux/userSlice";
 import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
-
 
 function App() {
   const dispatch = useDispatch();
@@ -88,6 +90,7 @@ function App() {
       <Route path={ADMIN} element={<Admin />}>
         <Route path={ADMIN} element={<Dashboard />} />
         <Route path={`${CHECK_SIGNUPS}/:id`} element={<CheckSignups />} />
+        <Route path={`${ADD_STUDENT_TO_CLASS}/:id`} element={<StudentReg />} />
         <Route path={CREATE_CLASS} element={<CreateClass />} />
         <Route path={USER_TO_MANAGER} element={<SwitchToAdmin />} />
         <Route path={`${EDIT_CLASS}/:id`} element={<EditClass />} />

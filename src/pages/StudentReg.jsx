@@ -1,19 +1,22 @@
 import { Footer, Navbar } from "../components";
 import { Link, useParams } from "react-router-dom";
 import { useFormik } from "formik";
-import { signupValidationSchema } from "../formValidation";
+import {
+  signupValidationSchema,
+  studentRegValidationSchema,
+} from "../formValidation";
 import { useDispatch, useSelector } from "react-redux";
 import { createUser } from "../Redux/userSlice";
-import { SIGNIN } from "../paths";
+import { BASE_URL, MANAGE_CLASSES, SIGNIN } from "../paths";
 import { ToastContainer } from "react-toastify";
 import myAlert from "../alert";
 import { useEffect } from "react";
+import customFetch from "../Redux/axiosObject";
 
-const SignUp = () => {
+const StudentReg = () => {
   const initialValues = {
     email: "",
     password: "",
-    cpassword: "",
     firstName: "",
     lastName: "",
   };
@@ -22,37 +25,39 @@ const SignUp = () => {
     userMessage: state.user.userMessage,
   }));
 
-  useEffect(() => {
-    if (userMessage) {
-      myAlert(userMessage, true);
-    }
-  }, [userMessage]);
-
-  const dispatch = useDispatch();
+  const params = useParams();
+  const id = params.id;
 
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } =
     useFormik({
       initialValues,
-      validationSchema: signupValidationSchema,
+      validationSchema: studentRegValidationSchema,
       onSubmit: (values) => {
-        // console.log({ values });
-        if (values.cpassword !== values.password) {
-          return myAlert("Password does not match!", true);
-        }
+        const finalValues = { ...values, password: values.firstName };
 
-        delete values.cpassword;
+        console.log({ finalValues });
 
-        dispatch(createUser(values));
+        customFetch
+          .post(`${BASE_URL}${STUDENT_REG_BY_ADMIN}/${id}`, finalValues)
+          .then((response) => {})
+          .catch((err) => {});
       },
     });
 
   return (
     <div>
-      <Navbar isAuthPage={true} />
-      <section className="container mx-auto px-6 py-16 flex justify-center items-center">
+      <section className="container mx-auto px-6 py-16 flex flex-col items-center">
+        <div className="mb-12">
+          <Link
+            to={MANAGE_CLASSES}
+            className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded"
+          >
+            BACK
+          </Link>
+        </div>
         <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
           <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
-            Create Your Account
+            Provide Student Details
           </h2>
           <div className="toast-container">
             <ToastContainer limit={2} />
@@ -130,77 +135,23 @@ const SignUp = () => {
                 )}
               </div>
             </div>
-            {/* <!-- Password Input --> */}
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-gray-700 font-medium mb-2"
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                name="password"
-                value={values.password}
-                onBlur={handleBlur}
-                onChange={handleChange}
-                placeholder="********"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
-              <div>
-                {touched.password && errors.password && (
-                  <span className="text-red-700 text-sm">
-                    {errors.password}
-                  </span>
-                )}
-              </div>
-            </div>
-            {/* <!-- Confirm Password Input --> */}
-            <div>
-              <label
-                htmlFor="cpassword"
-                className="block text-gray-700 font-medium mb-2"
-              >
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                id="cpassword"
-                name="cpassword"
-                placeholder="********"
-                value={values.cpassword}
-                onBlur={handleBlur}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
-              <div>
-                {touched.cpassword && errors.cpassword && (
-                  <span className="text-red-700 text-sm">
-                    {errors.cpassword}
-                  </span>
-                )}
-              </div>
-            </div>
             {/* <!-- Submit Button --> */}
             <button
               type="submit"
               className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition"
             >
-              Sign Up
+              Register Student for this class
             </button>
           </form>
           {/* <!-- Sign In Link --> */}
           <p className="mt-6 text-gray-600 text-center">
-            Already have an account?
-            <Link to={SIGNIN} className="text-indigo-600 hover:underline">
-              Sign In
-            </Link>
+            Students can login on this platform with their first name as
+            password
           </p>
         </div>
       </section>
-      <Footer />
     </div>
   );
 };
 
-export default SignUp;
+export default StudentReg;

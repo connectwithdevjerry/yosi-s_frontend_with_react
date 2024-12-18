@@ -1,44 +1,97 @@
 import { Footer, Navbar } from "../components";
 import { Link } from "react-router-dom";
 import beginner from "../assets/beginner.png";
-import { useEffect } from "react";
-import { getAllClasses } from "../Redux/myClassSlice";
+import { useEffect, useState } from "react";
+import { getAllClasses, getFilteredClasses } from "../Redux/myClassSlice";
 import { useDispatch, useSelector } from "react-redux";
 import formatDateTime from "../formatDate";
 import customFetch from "../Redux/axiosObject";
-import { BASE_URL, JOIN_CLASS } from "../paths";
+import { BASE_URL, JOIN_CLASS, USER_ROLE } from "../paths";
 import myAlert from "../alert";
 import { ToastContainer } from "react-toastify";
 
 const ClassDetails = () => {
   const dispatch = useDispatch();
+  let options = [];
 
-  const { all_classes, loading } = useSelector((state) => state.myClass);
-  const role = useSelector((state) => state.myClass.myRole);
+  const { all_classes, myFilteredClasses, loading } = useSelector(
+    (state) => state.myClass
+  );
+  const [age, setAge] = useState({ ageMin: "0", ageMax: "0" });
 
   useEffect(() => {
-    dispatch(getAllClasses(role));
-  }, []);
+    dispatch(getFilteredClasses(age));
+    dispatch(getAllClasses(USER_ROLE));
+  }, [age]);
 
   const handleJoin = (id) => {
     // Add logic to join the class
+    const quota = prompt(
+      "Please Enter the Quota Number to Reserve For your Team!"
+    );
+
+    if (!quota) return;
+    if (!Number(quota)) return myAlert("Quota must be a number", true);
+
     customFetch
-      .put(`${BASE_URL}${JOIN_CLASS}/${id}`)
-      .then((res) => {
-        myAlert(res?.data?.message, !res?.data?.status);
+      .put(`${BASE_URL}${JOIN_CLASS}/${id}`, {
+        quota: Number(quota),
+      })
+      .then((response) => {
+        if (response.data.status) {
+          return myAlert(response.data.message, !response.data.status);
+        } else {
+          return myAlert(response.data.message, !response.data.status);
+        }
       })
       .catch((err) => {
         console.log(err);
-        myAlert(err.message, true);
+        return myAlert(err.message, true);
       });
+  };
+
+  const handleFilter = (e) => {
+    const val = e.target.value.split("-");
+
+    setAge({ ageMin: Number(val[0]), ageMax: Number(val[1]) });
   };
 
   return (
     <div>
       <Navbar />
       <section className="container mx-auto px-6 py-16 pt-8">
-        <ToastContainer limit={2} />
-        {all_classes.map(
+        <div class="bg-white shadow rounded-lg p-5 mb-6">
+          <h2 class="text-xl font-semibold mb-4">Filter by Age Range</h2>
+          <div className="toast-container">
+            <ToastContainer limit={2} />
+          </div>
+          <form id="filterForm" class="flex items-center space-x-4">
+            <label class="flex items-center space-x-4">
+              <p>Select Age Group</p>
+              <select
+                onChange={handleFilter}
+                class="border border-gray-300 rounded p-2 px-4 w-40"
+              >
+                <option value="0-0">All Age Group</option>
+
+                {all_classes.map((myclass) => {
+                  let c = `${myclass.ageMin}-${myclass.ageMax}`;
+                  if (options.includes(c)) return;
+
+                  options.push(c);
+
+                  return (
+                    <option value={`${myclass.ageMin}-${myclass.ageMax}`}>
+                      {myclass.ageMin}-{myclass.ageMax}
+                    </option>
+                  );
+                })}
+              </select>
+            </label>
+          </form>
+        </div>
+
+        {myFilteredClasses.map(
           ({
             _id,
             title,
@@ -51,10 +104,13 @@ const ClassDetails = () => {
             venue,
             style,
             instructor,
-            students,
+            no_of_current_signups,
             uniqueRouteId,
           }) => (
-            <div key={_id} className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div
+              key={_id}
+              className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12"
+            >
               <div>
                 <img
                   src={classImage ? classImage : beginner}
@@ -107,7 +163,7 @@ const ClassDetails = () => {
                     </span>
                     <span className="text-red-500">
                       {" "}
-                      {no_of_max_signups - students.length} Slots
+                      {no_of_max_signups - no_of_current_signups} Slots
                       Remaining
                     </span>
                   </p>

@@ -12,7 +12,7 @@ import { Link } from "react-router";
 const MyClasses = () => {
   const dispatch = useDispatch();
   const { all_classes, loading } = useSelector((state) => state.myClass);
-//   const role = useSelector((state) => state.user.myRole);
+  //   const role = useSelector((state) => state.user.myRole);
   const myProfile = useSelector((state) => state.user.myProfile);
 
   const my_id = myProfile.aud;
@@ -24,6 +24,12 @@ const MyClasses = () => {
   const myClasses = all_classes.filter((classs) =>
     classs.students.includes(my_id)
   );
+
+  const analyzeMyQuota = (allQuotas) => {
+    console.log({ allQuotas });
+    const myQuotas = allQuotas.filter((quotas) => quotas.student === my_id);
+    return myQuotas[0]?.quota;
+  };
 
   const handleRemove = (id) => {
     const url = `${BASE_URL}${REMOVE_ME_FROM_CLASS}/${id}`;
@@ -43,6 +49,8 @@ const MyClasses = () => {
       });
   };
 
+  console.log(myClasses);
+
   if (loading) return <Loader />;
 
   return (
@@ -58,8 +66,10 @@ const MyClasses = () => {
         {myClasses.length === 0 && !loading && (
           <div className="text-center">
             <p>
-              You haven't joined any class yet {" "}
-              <Link to={CLASSES} className="text-red-600 underline italic">Check classes</Link>
+              You haven't joined any class yet{" "}
+              <Link to={CLASSES} className="text-red-600 underline italic">
+                Check classes
+              </Link>
             </p>
           </div>
         )}
@@ -76,7 +86,7 @@ const MyClasses = () => {
             venue,
             style,
             instructor,
-            no_of_current_signups,
+            quotaPerStudent,
             uniqueRouteId,
           }) => (
             <div
@@ -119,6 +129,10 @@ const MyClasses = () => {
                     {formatDateTime(dateAndTime ? dateAndTime : Date())}
                   </p>
                   <p>
+                    <span className="font-semibold text-gray-800">Quota:</span>{" "}
+                    {analyzeMyQuota(quotaPerStudent)}
+                  </p>
+                  <p>
                     <span className="font-semibold text-gray-800">
                       Instructor: {instructor?.firstName}
                     </span>
@@ -129,7 +143,7 @@ const MyClasses = () => {
                     onClick={() => handleRemove(uniqueRouteId)}
                     className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition"
                   >
-                    Remove Me
+                    Remove My Quota
                   </button>
                 </div>
               </div>
