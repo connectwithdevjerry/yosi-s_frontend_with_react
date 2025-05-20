@@ -7,7 +7,7 @@
 }
 
 .hex-brick {
-  background: #000000;
+  background: rgb(219 39 119 / var(--tw-bg-opacity, 1));
   width: 30px;
   height: 17px;
   position: absolute;
